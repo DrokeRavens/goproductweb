@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"text/template"
 
+	"github.com/productweb/service"
+
 	_ "gorm.io/driver/sqlserver"
 	_ "gorm.io/gorm"
 )
@@ -17,7 +19,11 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
+	produto := service.ProductService.Buscar(1)
+	fmt.Println(produto)
+	temp.ExecuteTemplate(w, "index", *produto)
+}
 
-	fmt.Println(produtos)
-	temp.ExecuteTemplate(w, "index", produtos)
+func cadastrar(w http.ResponseWriter, r *http.Request) {
+	temp.Execute(w, "cadastrar")
 }
